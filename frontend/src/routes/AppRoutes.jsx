@@ -24,6 +24,14 @@ const AppRoutes = () => {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/jobs" element={<Jobs />} />
+            <Route
+              path="/jobs/create"
+              element={
+                <ProtectedRoute>
+                  <CreateJob />
+                </ProtectedRoute>
+              }
+            />
             <Route path="/jobs/:id" element={<JobDetails />} />
             
             <Route
