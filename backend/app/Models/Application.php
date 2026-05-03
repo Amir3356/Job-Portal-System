@@ -10,6 +10,9 @@ class Application extends Model
         'user_id',
         'job_id',
         'cover_letter',
+        'phone',
+        'years_of_experience',
+        'portfolio_url',
         'resume_path',
         'status',
     ];

@@ -12,6 +12,10 @@ class ApplicationController extends Controller
     {
         $request->validate([
             'cover_letter' => 'nullable|string',
+            'phone' => 'required|string|max:20',
+            'years_of_experience' => 'nullable|integer|min:0|max:50',
+            'portfolio_url' => 'nullable|url|max:255',
+            'cv' => 'nullable|file|mimes:pdf,doc,docx|max:5120', // 5MB max
         ]);
 
         $job = Job::findOrFail($jobId);
@@ -27,10 +31,22 @@ class ApplicationController extends Controller
             ], 400);
         }
 
+        // Handle CV upload
+        $resumePath = null;
+        if ($request->hasFile('cv')) {
+            $file = $request->file('cv');
+            $fileName = time() . '_' . $request->user()->id . '_' . $file->getClientOriginalName();
+            $resumePath = $file->storeAs('resumes', $fileName, 'public');
+        }
+
         $application = Application::create([
             'user_id' => $request->user()->id,
             'job_id' => $jobId,
             'cover_letter' => $request->cover_letter,
+            'phone' => $request->phone,
+            'years_of_experience' => $request->years_of_experience,
+            'portfolio_url' => $request->portfolio_url,
+            'resume_path' => $resumePath,
         ]);
 
         return response()->json([

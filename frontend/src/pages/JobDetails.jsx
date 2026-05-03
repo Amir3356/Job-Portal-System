@@ -11,8 +11,15 @@ const JobDetails = () => {
   const [job, setJob] = useState(null);
   const [loading, setLoading] = useState(true);
   const [applying, setApplying] = useState(false);
-  const [coverLetter, setCoverLetter] = useState('');
   const [showApplyModal, setShowApplyModal] = useState(false);
+  const [formData, setFormData] = useState({
+    cover_letter: '',
+    phone: '',
+    years_of_experience: '',
+    portfolio_url: '',
+    cv: null,
+  });
+  const [cvFileName, setCvFileName] = useState('');
 
   useEffect(() => {
     fetchJob();
@@ -35,16 +42,67 @@ const JobDetails = () => {
       return;
     }
 
+    // Validation
+    if (!formData.phone) {
+      alert('Phone number is required');
+      return;
+    }
+
     setApplying(true);
     try {
-      await applicationAPI.apply(id, { cover_letter: coverLetter });
+      // Create FormData for file upload
+      const applicationData = new FormData();
+      applicationData.append('cover_letter', formData.cover_letter);
+      applicationData.append('phone', formData.phone);
+      applicationData.append('years_of_experience', formData.years_of_experience);
+      applicationData.append('portfolio_url', formData.portfolio_url);
+      if (formData.cv) {
+        applicationData.append('cv', formData.cv);
+      }
+
+      await applicationAPI.apply(id, applicationData);
       alert('Application submitted successfully!');
       setShowApplyModal(false);
-      setCoverLetter('');
+      
+      // Reset form
+      setFormData({
+        cover_letter: '',
+        phone: '',
+        years_of_experience: '',
+        portfolio_url: '',
+        cv: null,
+      });
+      setCvFileName('');
     } catch (error) {
       alert(error.response?.data?.message || 'Failed to submit application');
     } finally {
       setApplying(false);
+    }
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      // Validate file type
+      const allowedTypes = ['application/pdf', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+      if (!allowedTypes.includes(file.type)) {
+        alert('Please upload a PDF or Word document');
+        return;
+      }
+
+      // Validate file size (max 5MB)
+      if (file.size > 5 * 1024 * 1024) {
+        alert('File size must be less than 5MB');
+        return;
+      }
+
+      setFormData({ ...formData, cv: file });
+      setCvFileName(file.name);
     }
   };
 
@@ -123,22 +181,109 @@ const JobDetails = () => {
 
         {/* Apply Modal */}
         {showApplyModal && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-            <div className="bg-white rounded-lg max-w-md w-full p-6">
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50 overflow-y-auto">
+            <div className="bg-white rounded-lg max-w-2xl w-full p-6 my-8">
               <h3 className="text-2xl font-bold mb-4">Apply for {job.title}</h3>
-              <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Cover Letter (Optional)
-                </label>
-                <textarea
-                  value={coverLetter}
-                  onChange={(e) => setCoverLetter(e.target.value)}
-                  rows={6}
-                  className="input-field"
-                  placeholder="Tell us why you're a great fit for this role..."
-                />
+              
+              <div className="space-y-4 max-h-[70vh] overflow-y-auto pr-2">
+                {/* Phone Number */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Phone Number <span className="text-red-500">*</span>
+                  </label>
+                  <input
+                    type="tel"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleInputChange}
+                    required
+                    placeholder="e.g. +251912345678"
+                    className="input-field"
+                  />
+                </div>
+
+                {/* Years of Experience */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Years of Experience
+                  </label>
+                  <input
+                    type="number"
+                    name="years_of_experience"
+                    value={formData.years_of_experience}
+                    onChange={handleInputChange}
+                    min="0"
+                    max="50"
+                    placeholder="e.g. 3"
+                    className="input-field"
+                  />
+                </div>
+
+                {/* Portfolio URL */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Portfolio / LinkedIn URL
+                  </label>
+                  <input
+                    type="url"
+                    name="portfolio_url"
+                    value={formData.portfolio_url}
+                    onChange={handleInputChange}
+                    placeholder="https://linkedin.com/in/yourprofile"
+                    className="input-field"
+                  />
+                </div>
+
+                {/* CV Upload */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Upload CV/Resume <span className="text-red-500">*</span>
+                  </label>
+                  <div className="mt-1 flex items-center gap-4">
+                    <label className="flex-1 cursor-pointer">
+                      <div className="flex items-center justify-center px-4 py-3 border-2 border-dashed border-gray-300 rounded-lg hover:border-primary-500 transition-colors">
+                        <svg className="w-6 h-6 text-gray-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                        </svg>
+                        <span className="text-sm text-gray-600">
+                          {cvFileName || 'Choose file (PDF, DOC, DOCX)'}
+                        </span>
+                      </div>
+                      <input
+                        type="file"
+                        accept=".pdf,.doc,.docx"
+                        onChange={handleFileChange}
+                        className="hidden"
+                      />
+                    </label>
+                  </div>
+                  {cvFileName && (
+                    <div className="mt-2 flex items-center text-sm text-green-600">
+                      <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                      {cvFileName}
+                    </div>
+                  )}
+                </div>
+
+                {/* Cover Letter */}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Cover Letter
+                  </label>
+                  <textarea
+                    name="cover_letter"
+                    value={formData.cover_letter}
+                    onChange={handleInputChange}
+                    rows={6}
+                    className="input-field"
+                    placeholder="Tell us why you're a great fit for this role..."
+                  />
+                </div>
               </div>
-              <div className="flex gap-4">
+
+              <div className="flex gap-4 mt-6 pt-4 border-t">
                 <button
                   onClick={handleApply}
                   disabled={applying}
@@ -147,7 +292,17 @@ const JobDetails = () => {
                   {applying ? 'Submitting...' : 'Submit Application'}
                 </button>
                 <button
-                  onClick={() => setShowApplyModal(false)}
+                  onClick={() => {
+                    setShowApplyModal(false);
+                    setFormData({
+                      cover_letter: '',
+                      phone: '',
+                      years_of_experience: '',
+                      portfolio_url: '',
+                      cv: null,
+                    });
+                    setCvFileName('');
+                  }}
                   className="btn-secondary flex-1"
                 >
                   Cancel
