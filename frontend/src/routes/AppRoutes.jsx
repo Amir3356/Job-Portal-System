@@ -10,6 +10,7 @@ import Register from '../pages/Register';
 import Jobs from '../pages/Jobs';
 import JobDetails from '../pages/JobDetails';
 import CreateJob from '../pages/CreateJob';
+import EditJob from '../pages/EditJob';
 import Dashboard from '../pages/Dashboard';
 import Profile from '../pages/Profile';
 
