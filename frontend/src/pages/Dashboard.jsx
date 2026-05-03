@@ -34,7 +34,7 @@ const Dashboard = () => {
   return (
     <div className="min-h-screen py-8">
       <div className="container mx-auto px-4">
-        <div className="mb-8">
+        <div className="mb-8 text-center">
           <h1 className="text-3xl font-bold mb-2">Welcome back, {user?.name}!</h1>
           <p className="text-gray-600">
             {isEmployer ? 'Manage your job postings and applications' : 'Track your job applications'}
