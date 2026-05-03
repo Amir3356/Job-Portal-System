@@ -15,7 +15,6 @@ import JobApplications from '../pages/JobApplications';
 import Dashboard from '../pages/Dashboard';
 import Admin from '../pages/Admin';
 import EditApplication from '../pages/EditApplication';
-import Profile from '../pages/Profile';
 
 const AppRoutes = () => {
   return (
@@ -77,15 +76,6 @@ const AppRoutes = () => {
               element={
                 <ProtectedRoute>
                   <EditApplication />
-                </ProtectedRoute>
-              }
-            />
-            
-            <Route
-              path="/profile"
-              element={
-                <ProtectedRoute>
-                  <Profile />
                 </ProtectedRoute>
               }
             />
