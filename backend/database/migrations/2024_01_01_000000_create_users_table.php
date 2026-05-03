@@ -13,7 +13,6 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->enum('role', ['admin', 'employer', 'job_seeker'])->default('job_seeker');
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->timestamps();
         });
