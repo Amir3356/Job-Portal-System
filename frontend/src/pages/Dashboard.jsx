@@ -30,7 +30,7 @@ const Dashboard = () => {
   };
 
   const handleDeleteApplication = async (id) => {
-    if (!window.confirm('Are you sure you want to withdraw this application?')) {
+    if (!window.confirm('Are you sure you want to delete this application?')) {
       return;
     }
 
@@ -199,7 +199,7 @@ const Dashboard = () => {
                           onClick={() => handleDeleteApplication(application.id)}
                           className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors"
                         >
-                          Withdraw
+                          Delete
                         </button>
                       </div>
                     </div>
