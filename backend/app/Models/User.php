@@ -10,6 +10,8 @@ class User extends Authenticatable
 {
     use HasApiTokens, Notifiable;
 
+    const UPDATED_AT = null;
+
     protected $fillable = [
         'name',
         'email',
