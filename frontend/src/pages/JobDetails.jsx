@@ -52,11 +52,19 @@ const JobDetails = () => {
     try {
       // Create FormData for file upload
       const applicationData = new FormData();
-      applicationData.append('cover_letter', formData.cover_letter);
+      
+      // Only append fields that have values
+      if (formData.cover_letter) {
+        applicationData.append('cover_letter', formData.cover_letter);
+      }
       applicationData.append('phone', formData.phone);
-      applicationData.append('years_of_experience', formData.years_of_experience);
-      applicationData.append('portfolio_url', formData.portfolio_url);
-      if (formData.cv) {
+      if (formData.years_of_experience) {
+        applicationData.append('years_of_experience', formData.years_of_experience);
+      }
+      if (formData.portfolio_url) {
+        applicationData.append('portfolio_url', formData.portfolio_url);
+      }
+      if (formData.cv && formData.cv instanceof File) {
         applicationData.append('cv', formData.cv);
       }
 
