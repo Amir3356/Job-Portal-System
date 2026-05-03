@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('salary');
             $table->json('skills')->nullable();
             $table->enum('status', ['active', 'closed'])->default('active');
-            $table->timestamp('created_at')->nullable();
+            $table->timestamps();
         });
     }
 

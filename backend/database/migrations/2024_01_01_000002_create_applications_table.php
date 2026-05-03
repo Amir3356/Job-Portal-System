@@ -15,7 +15,7 @@ return new class extends Migration
             $table->text('cover_letter')->nullable();
             $table->string('resume_path')->nullable();
             $table->enum('status', ['pending', 'accepted', 'rejected'])->default('pending');
-            $table->timestamp('created_at')->nullable();
+            $table->timestamps();
             
             // Prevent duplicate applications
             $table->unique(['user_id', 'job_id']);
