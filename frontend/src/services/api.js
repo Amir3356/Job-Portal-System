@@ -67,6 +67,14 @@ export const applicationAPI = {
   getMyApplications: () => api.get('/applications/my'),
   getByJob: (jobId) => api.get(`/jobs/${jobId}/applications`),
   getJobApplications: (jobId) => api.get(`/jobs/${jobId}/applications`),
+  getById: (id) => api.get(`/applications/${id}`),
+  updateApplication: (id, data) => {
+    const config = data instanceof FormData ? {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    } : {};
+    return api.post(`/applications/${id}`, data, config);
+  },
+  deleteApplication: (id) => api.delete(`/applications/${id}`),
   updateStatus: (id, status) => api.patch(`/applications/${id}/status`, { status }),
 };
 
