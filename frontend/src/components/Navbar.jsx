@@ -41,13 +41,14 @@ const Navbar = () => {
             {isAuthenticated ? (
               <>
                 <Link to="/profile" className="text-gray-700 hover:text-primary-600 transition">
-                  <div className="flex items-center space-x-2">
-                    <div className="w-8 h-8 bg-primary-600 rounded-full flex items-center justify-center text-white font-semibold">
-                      {user?.name?.charAt(0).toUpperCase()}
-                    </div>
-                    <span className="hidden md:block">{user?.name}</span>
-                  </div>
+                  Profile
                 </Link>
+                <div className="flex items-center space-x-2">
+                  <div className="w-8 h-8 bg-primary-600 rounded-full flex items-center justify-center text-white font-semibold">
+                    {user?.name?.charAt(0).toUpperCase()}
+                  </div>
+                  <span className="hidden md:block text-gray-700">{user?.name}</span>
+                </div>
                 <button
                   onClick={handleLogout}
                   className="btn-secondary"

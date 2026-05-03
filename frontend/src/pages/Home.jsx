@@ -53,7 +53,7 @@ const Home = () => {
                 </svg>
               </div>
               <h3 className="text-xl font-semibold mb-2">Quick Apply</h3>
-              <p className="text-gray-600">Apply to multiple jobs with just one click using your profile</p>
+              <p className="text-gray-600">Apply to multiple jobs with just one click</p>
             </div>
             <div className="text-center">
               <div className="w-16 h-16 bg-primary-100 rounded-full flex items-center justify-center mx-auto mb-4">

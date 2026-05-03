@@ -13,9 +13,9 @@ import CreateJob from '../pages/CreateJob';
 import EditJob from '../pages/EditJob';
 import JobApplications from '../pages/JobApplications';
 import Dashboard from '../pages/Dashboard';
-import Profile from '../pages/Profile';
 import Admin from '../pages/Admin';
 import EditApplication from '../pages/EditApplication';
+import Profile from '../pages/Profile';
 
 const AppRoutes = () => {
   return (
@@ -64,15 +64,6 @@ const AppRoutes = () => {
             />
             
             <Route
-              path="/profile"
-              element={
-                <ProtectedRoute>
-                  <Profile />
-                </ProtectedRoute>
-              }
-            />
-            
-            <Route
               path="/admin"
               element={
                 <ProtectedRoute>
@@ -86,6 +77,15 @@ const AppRoutes = () => {
               element={
                 <ProtectedRoute>
                   <EditApplication />
+                </ProtectedRoute>
+              }
+            />
+            
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute>
+                  <Profile />
                 </ProtectedRoute>
               }
             />

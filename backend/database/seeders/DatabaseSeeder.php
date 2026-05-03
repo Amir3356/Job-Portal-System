@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-use App\Models\Profile;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -17,8 +16,6 @@ class DatabaseSeeder extends Seeder
             'password' => 'AEHJSS36',
             'role'     => 'admin',
         ]);
-
-        Profile::create(['user_id' => $admin->id]);
     }
 }
 

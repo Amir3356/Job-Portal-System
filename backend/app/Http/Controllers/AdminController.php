@@ -38,9 +38,7 @@ class AdminController extends Controller
             return response()->json(['message' => 'Unauthorized'], 403);
         }
 
-        $users = User::with('profile')
-            ->orderBy('created_at', 'desc')
-            ->get();
+        $users = User::orderBy('created_at', 'desc')->get();
 
         return response()->json(['users' => $users]);
     }

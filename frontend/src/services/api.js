@@ -78,17 +78,4 @@ export const applicationAPI = {
   updateStatus: (id, status) => api.patch(`/applications/${id}/status`, { status }),
 };
 
-// Profile API
-export const profileAPI = {
-  get: () => api.get('/profile'),
-  update: (data) => api.put('/profile', data),
-  uploadResume: (file) => {
-    const formData = new FormData();
-    formData.append('resume', file);
-    return api.post('/profile/resume', formData, {
-      headers: { 'Content-Type': 'multipart/form-data' },
-    });
-  },
-};
-
 export default api;

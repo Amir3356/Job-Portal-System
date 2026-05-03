@@ -5,7 +5,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\ApplicationController;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminController;
 
 // Public routes
@@ -22,11 +21,6 @@ Route::middleware('auth:sanctum')->group(function () {
     // Auth routes
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/user', [AuthController::class, 'user']);
-
-    // Profile routes
-    Route::get('/profile', [ProfileController::class, 'show']);
-    Route::put('/profile', [ProfileController::class, 'update']);
-    Route::post('/profile/resume', [ProfileController::class, 'uploadResume']);
 
     // Job routes (for employers)
     Route::post('/jobs', [JobController::class, 'store']);
