@@ -6,8 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Job extends Model
 {
-    const UPDATED_AT = null;
-
     protected $fillable = [
         'user_id',
         'title',
