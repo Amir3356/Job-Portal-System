@@ -237,7 +237,7 @@ const JobDetails = () => {
                 {/* CV Upload */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Upload CV/Resume <span className="text-red-500">*</span>
+                    Upload CV/Resume (Optional)
                   </label>
                   <div className="mt-1 flex items-center gap-4">
                     <label className="flex-1 cursor-pointer">
