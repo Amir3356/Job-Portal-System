@@ -212,7 +212,7 @@ const JobDetails = () => {
                     Portfolio / LinkedIn URL
                   </label>
                   <input
-                    type="url"
+                    type="text"
                     name="portfolio_url"
                     value={formData.portfolio_url}
                     onChange={handleInputChange}

@@ -14,7 +14,7 @@ class ApplicationController extends Controller
             'cover_letter' => 'nullable|string',
             'phone' => 'required|string|max:20',
             'years_of_experience' => 'nullable|integer|min:0|max:50',
-            'portfolio_url' => 'nullable|url|max:255',
+            'portfolio_url' => 'nullable|string|max:255',
             'cv' => 'nullable|file|max:51200', // 50MB max, any file type
         ]);
 
