@@ -14,6 +14,7 @@ import EditJob from '../pages/EditJob';
 import JobApplications from '../pages/JobApplications';
 import Dashboard from '../pages/Dashboard';
 import Profile from '../pages/Profile';
+import Admin from '../pages/Admin';
 
 const AppRoutes = () => {
   return (
@@ -66,6 +67,15 @@ const AppRoutes = () => {
               element={
                 <ProtectedRoute>
                   <Profile />
+                </ProtectedRoute>
+              }
+            />
+            
+            <Route
+              path="/admin"
+              element={
+                <ProtectedRoute>
+                  <Admin />
                 </ProtectedRoute>
               }
             />
