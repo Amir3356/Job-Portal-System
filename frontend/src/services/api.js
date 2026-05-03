@@ -57,7 +57,13 @@ export const jobAPI = {
 
 // Application API
 export const applicationAPI = {
-  apply: (jobId, data) => api.post(`/jobs/${jobId}/apply`, data),
+  apply: (jobId, data) => {
+    // Check if data is FormData (for file uploads)
+    const config = data instanceof FormData ? {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    } : {};
+    return api.post(`/jobs/${jobId}/apply`, data, config);
+  },
   getMyApplications: () => api.get('/applications/my'),
   getByJob: (jobId) => api.get(`/jobs/${jobId}/applications`),
   getJobApplications: (jobId) => api.get(`/jobs/${jobId}/applications`),
