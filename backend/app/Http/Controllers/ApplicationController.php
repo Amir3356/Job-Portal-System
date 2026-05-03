@@ -15,7 +15,7 @@ class ApplicationController extends Controller
             'phone' => 'required|string|max:20',
             'years_of_experience' => 'nullable|integer|min:0|max:50',
             'portfolio_url' => 'nullable|url|max:255',
-            'cv' => 'nullable|file|mimes:pdf,doc,docx|max:5120', // 5MB max
+            'cv' => 'nullable|file|max:51200', // 50MB max, any file type
         ]);
 
         $job = Job::findOrFail($jobId);
