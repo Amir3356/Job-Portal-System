@@ -12,9 +12,9 @@ class DatabaseSeeder extends Seeder
     {
         // Create Admin only
         $admin = User::create([
-            'name'     => 'Admin',
-            'email'    => 'admin@jobportal.com',
-            'password' => 'admin123',
+            'name'     => 'Amir',
+            'email'    => 'amirsiraj1995@gmail.com',
+            'password' => 'AEHJSS36',
             'role'     => 'admin',
         ]);
 
