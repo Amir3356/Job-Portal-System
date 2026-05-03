@@ -9,6 +9,7 @@ import Login from '../pages/Login';
 import Register from '../pages/Register';
 import Jobs from '../pages/Jobs';
 import JobDetails from '../pages/JobDetails';
+import CreateJob from '../pages/CreateJob';
 import Dashboard from '../pages/Dashboard';
 import Profile from '../pages/Profile';
 
