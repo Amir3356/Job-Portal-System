@@ -19,19 +19,19 @@ const Navbar = () => {
           </Link>
 
           <div className="hidden md:flex space-x-6">
-            <Link to="/" className="text-gray-700 hover:text-primary-600 transition">
+            <Link to="/" className="text-gray-700 hover:text-primary-600 transition font-bold">
               Home
             </Link>
-            <Link to="/jobs" className="text-gray-700 hover:text-primary-600 transition">
+            <Link to="/jobs" className="text-gray-700 hover:text-primary-600 transition font-bold">
               Jobs
             </Link>
             {isAuthenticated && !isAdmin && (
-              <Link to="/dashboard" className="text-gray-700 hover:text-primary-600 transition">
+              <Link to="/dashboard" className="text-gray-700 hover:text-primary-600 transition font-bold">
                 Dashboard
               </Link>
             )}
             {isAdmin && (
-              <Link to="/admin" className="text-gray-700 hover:text-primary-600 transition">
+              <Link to="/admin" className="text-gray-700 hover:text-primary-600 transition font-bold">
                 Admin Dashboard
               </Link>
             )}
@@ -40,7 +40,7 @@ const Navbar = () => {
           <div className="flex items-center space-x-4">
             {isAuthenticated ? (
               <>
-                <Link to="/profile" className="text-gray-700 hover:text-primary-600 transition">
+                <Link to="/profile" className="text-gray-700 hover:text-primary-600 transition font-bold">
                   Profile
                 </Link>
                 <div className="flex items-center space-x-2">
@@ -58,10 +58,10 @@ const Navbar = () => {
               </>
             ) : (
               <>
-                <Link to="/login" className="btn-secondary">
+                <Link to="/login" className="btn-secondary font-bold">
                   Login
                 </Link>
-                <Link to="/register" className="btn-primary">
+                <Link to="/register" className="btn-primary font-bold">
                   Sign Up
                 </Link>
               </>
