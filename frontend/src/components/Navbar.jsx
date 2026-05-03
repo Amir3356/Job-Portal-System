@@ -25,9 +25,14 @@ const Navbar = () => {
             <Link to="/jobs" className="text-gray-700 hover:text-primary-600 transition">
               Jobs
             </Link>
-            {isAuthenticated && (
+            {isAuthenticated && !isAdmin && (
               <Link to="/dashboard" className="text-gray-700 hover:text-primary-600 transition">
                 Dashboard
+              </Link>
+            )}
+            {isAdmin && (
+              <Link to="/admin" className="text-gray-700 hover:text-primary-600 transition">
+                Admin Dashboard
               </Link>
             )}
           </div>
