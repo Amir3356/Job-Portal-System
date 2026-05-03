@@ -29,6 +29,20 @@ const Dashboard = () => {
     }
   };
 
+  const handleDeleteApplication = async (id) => {
+    if (!window.confirm('Are you sure you want to withdraw this application?')) {
+      return;
+    }
+
+    try {
+      await applicationAPI.deleteApplication(id);
+      alert('Application withdrawn successfully');
+      fetchDashboardData();
+    } catch (error) {
+      alert(error.response?.data?.message || 'Failed to withdraw application');
+    }
+  };
+
   if (loading) return <Loading />;
 
   return (
