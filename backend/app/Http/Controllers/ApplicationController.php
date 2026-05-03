@@ -66,6 +66,90 @@ class ApplicationController extends Controller
         ]);
     }
 
+    public function show(Request $request, $id)
+    {
+        $application = Application::with(['job', 'user'])->findOrFail($id);
+
+        // Check if user owns the application
+        if ($application->user_id !== $request->user()->id) {
+            return response()->json([
+                'message' => 'Unauthorized',
+            ], 403);
+        }
+
+        return response()->json([
+            'application' => $application,
+        ]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $application = Application::findOrFail($id);
+
+        // Check if user owns the application
+        if ($application->user_id !== $request->user()->id) {
+            return response()->json([
+                'message' => 'Unauthorized',
+            ], 403);
+        }
+
+        $request->validate([
+            'cover_letter' => 'nullable|string',
+            'phone' => 'required|string|max:20',
+            'years_of_experience' => 'nullable|integer|min:0|max:50',
+            'portfolio_url' => 'nullable|string|max:255',
+        ]);
+
+        // Handle CV upload if new file provided
+        $resumePath = $application->resume_path;
+        if ($request->hasFile('cv') && $request->file('cv')->isValid()) {
+            // Delete old CV if exists
+            if ($resumePath && \Storage::disk('public')->exists($resumePath)) {
+                \Storage::disk('public')->delete($resumePath);
+            }
+
+            $file = $request->file('cv');
+            $fileName = time() . '_' . $request->user()->id . '_' . $file->getClientOriginalName();
+            $resumePath = $file->storeAs('resumes', $fileName, 'public');
+        }
+
+        $application->update([
+            'cover_letter' => $request->cover_letter,
+            'phone' => $request->phone,
+            'years_of_experience' => $request->years_of_experience,
+            'portfolio_url' => $request->portfolio_url,
+            'resume_path' => $resumePath,
+        ]);
+
+        return response()->json([
+            'message' => 'Application updated successfully',
+            'application' => $application,
+        ]);
+    }
+
+    public function destroy(Request $request, $id)
+    {
+        $application = Application::findOrFail($id);
+
+        // Check if user owns the application
+        if ($application->user_id !== $request->user()->id) {
+            return response()->json([
+                'message' => 'Unauthorized',
+            ], 403);
+        }
+
+        // Delete CV file if exists
+        if ($application->resume_path && \Storage::disk('public')->exists($application->resume_path)) {
+            \Storage::disk('public')->delete($application->resume_path);
+        }
+
+        $application->delete();
+
+        return response()->json([
+            'message' => 'Application withdrawn successfully',
+        ]);
+    }
+
     public function jobApplications(Request $request, $jobId)
     {
         $job = Job::findOrFail($jobId);
