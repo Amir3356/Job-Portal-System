@@ -10,6 +10,7 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
+        // Create Admin only
         $admin = User::create([
             'name'     => 'Admin',
             'email'    => 'admin@jobportal.com',
@@ -20,3 +21,4 @@ class DatabaseSeeder extends Seeder
         Profile::create(['user_id' => $admin->id]);
     }
 }
+

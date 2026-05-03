@@ -15,7 +15,6 @@ class ApplicationController extends Controller
             'phone' => 'required|string|max:20',
             'years_of_experience' => 'nullable|integer|min:0|max:50',
             'portfolio_url' => 'nullable|string|max:255',
-            'cv' => 'nullable|file|max:51200', // 50MB max, any file type
         ]);
 
         $job = Job::findOrFail($jobId);
@@ -33,7 +32,7 @@ class ApplicationController extends Controller
 
         // Handle CV upload
         $resumePath = null;
-        if ($request->hasFile('cv')) {
+        if ($request->hasFile('cv') && $request->file('cv')->isValid()) {
             $file = $request->file('cv');
             $fileName = time() . '_' . $request->user()->id . '_' . $file->getClientOriginalName();
             $resumePath = $file->storeAs('resumes', $fileName, 'public');
